@@ -14,37 +14,85 @@ function startTimer(seconds) {
 }
 
 function updateTimer() {
+  const timerEl = document.getElementById("timerEl");
+  if (!timerEl) return;
   const mins = Math.floor(timeLeft / 60);
   const secs = timeLeft % 60;
-  document.getElementById("timer").innerText = `⏳ Time Left: ${mins}:${secs.toString().padStart(2, '0')}`;
+  timerEl.innerText = `⏳ Time Left: ${mins}:${secs.toString().padStart(2, '0')}`;
 }
 
 ws.onmessage = (event) => {
   const data = JSON.parse(event.data);
   const mode = data.mode;
-  document.getElementById("status").innerText = mode === "vote" ? "🗳️ Voting in progress..." : "🎯 Active Quest!";
-  document.getElementById("idea").innerText = mode === "vote" ? `Quest Idea:
-${data.idea}` : "";
-  document.getElementById("quest").innerText = mode === "quest" ? data.quest : "";
 
+  const statusEl = document.getElementById("status");
+  if (statusEl) {
+    if (mode === "vote") {
+      statusEl.innerText = "🗳️ Voting in progress...";
+    } else if (mode === "quest") {
+      statusEl.innerText = "🎯 Active Quest!";
+    } else {
+      statusEl.innerText = "💤 Add a Quest to Vote!";
+    }
+  }
+
+  const ideaEl = document.getElementById("idea");
+  if (ideaEl) {
+    ideaEl.innerText = mode === "vote" ? `Quest Idea:\n${data.idea}` : "";
+  }
+  
+  const questEl = document.getElementById("quest");
+  if (questEl) {
+    questEl.innerText = mode === "quest" ? data.quest : "";
+  }
+
+  const voteCountsEl = document.getElementById("voteCounts");
   if (mode === "vote") {
     startTimer(120);
-    document.getElementById("voteCounts").innerText = `✅ Yes: ${data.votes.yes}  ❌ No: ${data.votes.no}`;
-    setTimeout(() => {
-    window.location.reload();
-  }, 5000);
+    if (voteCountsEl) {
+      voteCountsEl.style.display = "block";
+      voteCountsEl.innerText = `✅ Yes: ${data.votes.yes}  ❌ No: ${data.votes.no}`;
+    }
   } else if (mode === "quest") {
-    const li = document.createElement("li");
-    li.textContent = data.quest.slice(0, 100) + "...";
-    document.getElementById("history").prepend(li);
+    if (voteCountsEl) {
+      voteCountsEl.style.display = "none";
+      voteCountsEl.innerText = "";
+    }
+    const historyEl = document.getElementById("history");
+    if (historyEl && data.quest) {
+      const li = document.createElement("li");
+      li.textContent = data.quest.slice(0, 100) + "...";
+      historyEl.prepend(li);
+    }
     startTimer(1200);
-    document.getElementById("voteCounts").innerText = "";
-    setTimeout(() => {
-    window.location.reload();
-  }, 5000);
   } else {
-    document.getElementById("timer").innerText = "";
     clearInterval(timerInterval);
-    document.getElementById("voteCounts").innerText = "";
+    if (voteCountsEl) {
+      voteCountsEl.style.display = "none";
+      voteCountsEl.innerText = "";
+    }
+    const timerEl = document.getElementById("timerEl");
+    if (timerEl) timerEl.innerText = "";
   }
 };
+
+let currentOverlay = null;
+
+async function checkOverlay() {
+  try {
+    const res = await fetch('/overlay/current_view.txt?_=' + new Date().getTime());
+    if (!res.ok) throw new Error('Failed to fetch overlay file');
+    const overlay = (await res.text()).trim();
+
+    if (currentOverlay && overlay !== currentOverlay) {
+      console.log(`Overlay changed from ${currentOverlay} to ${overlay}, reloading...`);
+      location.reload();
+    }
+    currentOverlay = overlay;
+  } catch (e) {
+    console.error('Error checking overlay:', e);
+  }
+}
+
+setInterval(checkOverlay, 5000);
+checkOverlay();

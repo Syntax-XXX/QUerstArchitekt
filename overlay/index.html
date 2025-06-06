@@ -42,12 +42,22 @@
       overflow-y: auto;
       font-size: 0.9rem;
     }
+    #voteCounts {
+      display: none;
+    }
+    .timer {
+      font-size: 1.2em;
+      color: #fff;
+      margin: 10px 0;
+    }
+
   </style>
 </head>
 <body>
   <div id="status">Loading...</div>
-  <div id="timer"></div>
+  <div class="glass-box" id="timerEl" class="timer"></div>
   <div class="glass-box" id="idea"></div>
+  <div class="glass-box" id="voteCounts"></div>
   <div class="glass-box" id="quest"></div>
   <div id="log"><strong>Quest Log</strong><ul id="history"></ul></div>
   <script src="overlay/live.js"></script>

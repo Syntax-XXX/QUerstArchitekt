@@ -62,21 +62,39 @@ async def streamer_panel(request: Request):
 
 @app.post("/quest_complete")
 async def quest_complete():
-    if state["mode"] != "quest":
-        return {"error": "No active quest to complete"}
-    await switch_overlay("quest_completed.html")
+    state["mode"] = "completed"
+    await broadcast_state()
+    await switch_overlay("quest_completed.html")  # temporary screen
     await asyncio.sleep(6)
-    await switch_overlay("index.html")
-    return {"status": "Quest marked as complete"}
+    state.update({
+        "mode": "idle",
+        "idea": None,
+        "quest": "",
+        "votes": {"yes": 0, "no": 0},
+        "voters": set()
+    })
+    await broadcast_state()
+    await switch_overlay("index.html")  # go back to idle view
+    return {"status": "Quest completed"}
+
 
 @app.post("/quest_skip")
 async def quest_skip():
-    if state["mode"] != "quest":
-        return {"error": "No active quest to skip"}
-    await switch_overlay("quest_skipped.html")
+    state["mode"] = "skipped"
+    await broadcast_state()
+    await switch_overlay("quest_skipped.html")  # temporary screen
     await asyncio.sleep(6)
-    await switch_overlay("index.html")
-    return {"status": "Quest was skipped"}
+    state.update({
+        "mode": "idle",
+        "idea": None,
+        "quest": "",
+        "votes": {"yes": 0, "no": 0},
+        "voters": set()
+    })
+    await broadcast_state()
+    await switch_overlay("index.html")  # go back to idle view
+    return {"status": "Quest skipped"}
+
 
 @app.post("/submit_vote")
 async def submit_vote(request: Request):
