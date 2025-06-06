@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Stream Quest Overlay</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+      color: #fff;
+      overflow: hidden;
+    }
+    .glass-box {
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 20px;
+      margin: 20px;
+      max-width: 800px;
+      font-size: 1.3rem;
+    }
+    #status {
+      font-size: 2rem;
+      font-weight: bold;
+      margin: 10px 20px;
+    }
+    #timer {
+      font-size: 1.5rem;
+      margin: 10px 20px;
+    }
+    #log {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px;
+      border-radius: 10px;
+      max-height: 90vh;
+      width: 300px;
+      overflow-y: auto;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="status">Loading...</div>
+  <div id="timer"></div>
+  <div class="glass-box" id="idea"></div>
+  <div class="glass-box" id="quest"></div>
+  <div id="log"><strong>Quest Log</strong><ul id="history"></ul></div>
+  <script src="overlay/live.js"></script>
+</body>
+</html>

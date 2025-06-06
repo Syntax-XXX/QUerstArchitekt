@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Dev Mode</title>
+</head>
+<body>
+  <h2>Dev Mode Quest Tester</h2>
+
+  <form onsubmit="submitIdea(event)">
+    <input type="text" id="ideaInput" placeholder="Enter quest idea" style="width: 300px;">
+    <button type="submit">Submit Quest Idea</button>
+  </form>
+
+  <br/>
+  <button onclick="vote('yes')">Vote Yes</button>
+  <button onclick="vote('no')">Vote No</button>
+
+  <h3>Status:</h3>
+  <pre id="status">Waiting...</pre>
+
+  <script>
+    const ws = new WebSocket("ws://" + window.location.host + "/ws");
+
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      document.getElementById("status").textContent = JSON.stringify(data, null, 2);
+    };
+
+    function submitIdea(e) {
+      e.preventDefault();
+      const idea = document.getElementById("ideaInput").value;
+      fetch("/submit_idea", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idea })
+      });
+    }
+
+    function vote(v) {
+      fetch("/submit_vote", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user: "dev_user", vote: v })
+      });
+    }
+  </script>
+</body>
+</html>

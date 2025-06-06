@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Streamer Panel</title>
+</head>
+<body>
+    <h2>Streamer Quest Controls</h2>
+    <button onclick="handleAction('/quest_complete')">✅ Mark Quest Complete</button>
+    <button onclick="handleAction('/quest_skip')">⏭️ Skip Quest</button>
+
+    <script>
+        async function handleAction(endpoint) {
+            const res = await fetch(endpoint, { method: "POST" });
+            const result = await res.json();
+            alert(result.status || result.error);
+
+            fetch("/refresh_overlay");
+        }
+    </script>
+</body>
+</html>
