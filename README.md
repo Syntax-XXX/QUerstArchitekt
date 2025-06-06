@@ -68,7 +68,7 @@ pip install -r requirements.txt
 - overlay/current_view.txt
 
 ## 📁 Project Structure
-.
+```
 ├── main.py                 # FastAPI app with WebSocket, endpoints, logic
 ├── groq_api.py             # AI generation via Groq API
 ├── overlay/                # HTML files for OBS overlay
@@ -77,7 +77,7 @@ pip install -r requirements.txt
 ├── .env                    # Environment variables
 ├── requirements.txt
 └── README.md
-
+```
 
 ## 📄 License
 - MIT License. See LICENSE for more details.
