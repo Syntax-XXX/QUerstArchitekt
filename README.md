@@ -86,7 +86,7 @@ pip install -r requirements.txt
 - Pull requests and feedback are welcome! If you want to extend this for Twitch chat integration, feel free to fork or open a feature request.
 
 ## 📷 Credits
-- Built by [Your Name or Handle]
+- Built by Syntax-XXX
 
 - Uses Groq API for AI-based quest generation
 
