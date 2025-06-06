@@ -26,49 +26,49 @@
 install dependencies:
 pip install -r requirements.txt
 
+---
+
 ## 🚀 Getting Started
 
 1. Clone and configure
 
-git clone https://github.com/yourname/stream-quest-architect.git
-cd stream-quest-architect
-cp .env.template .env
-Edit .env
+- git clone https://github.com/yourname/stream-quest-architect.git
+- cd stream-quest-architect
+- cp .env.template .env
+- Edit .env
 
 2. Run in development mode
-python main.py --dev
-Web UI: http://localhost:5000/dev
+- python main.py --dev
+- Web UI: http://localhost:5000/dev
 
-Overlay: Add a browser source pointing to:
-http://localhost:5000/current_overlay
+- Overlay: Add a browser source pointing to:
+- http://localhost:5000/current_overlay
 
 3. Run in production (with Twitch bot or full chat integration)
-python main.py
-(Twitch bot setup code not included here – implement as needed.)
+- python main.py
+- (Twitch bot setup code not included here – implement as needed.)
 
-🧑‍💼 Streamer Panel
-Access the control panel at:
-http://localhost:5000/streamer_controls
-✅ Mark quest complete
+## 🧑‍💼 Streamer Panel
+- Access the control panel at:
+- http://localhost:5000/streamer_controls
+- ✅ Mark quest complete
+- ⏭️ Skip quest
+- Both actions will switch the overlay and show a brief "completed" or "skipped" screen before returning to the current quest view.
 
-⏭️ Skip quest
+## 🧩 Overlay Views
+- All overlays are located in /overlay/:
 
-Both actions will switch the overlay and show a brief "completed" or "skipped" screen before returning to the current quest view.
+- index.html – Idle state
 
-🧩 Overlay Views
-All overlays are located in /overlay/:
+- quest_completed.html – 6s overlay after quest completion
 
-index.html – Idle state
+- quest_skipped.html – 6s overlay after skipping
 
-quest_completed.html – 6s overlay after quest completion
-
-quest_skipped.html – 6s overlay after skipping
-
-The current view is controlled by:
-overlay/current_view.txt
+- The current view is controlled by:
+- overlay/current_view.txt
 
 ## 📁 Project Structure
-
+.
 ├── main.py                 # FastAPI app with WebSocket, endpoints, logic
 ├── groq_api.py             # AI generation via Groq API
 ├── overlay/                # HTML files for OBS overlay
@@ -80,16 +80,16 @@ overlay/current_view.txt
 
 
 ## 📄 License
-MIT License. See LICENSE for more details.
+- MIT License. See LICENSE for more details.
 
 ## 🤝 Contributions
-Pull requests and feedback are welcome! If you want to extend this for Twitch chat integration, feel free to fork or open a feature request.
+- Pull requests and feedback are welcome! If you want to extend this for Twitch chat integration, feel free to fork or open a feature request.
 
 ## 📷 Credits
-Built by [Your Name or Handle]
+- Built by [Your Name or Handle]
 
-Uses Groq API for AI-based quest generation
+- Uses Groq API for AI-based quest generation
 
 ---
 
-if there are any questions join my discord https://dsc.gg/syntax-xxx
+- if there are any questions join my [discord](https://dsc.gg/syntax-xxx)
